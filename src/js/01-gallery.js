@@ -1,10 +1,8 @@
+import { galleryItems } from './gallery-items';
 // Opisany w dokumentacji
-//import SimpleLightbox from '../../node_modules/simplelightbox/dist/simple-lightbox.js';
+import SimpleLightbox from 'simplelightbox';
 // Dodatkowy import stylów
-
-//import '../../node_modules/simplelightbox/dist/simple-lightbox.min.css'; // Import stylów CSS
-
-//import { galleryItems } from './gallery-items.js';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 document.addEventListener('DOMContentLoaded', function () {
   const instance = new SimpleLightbox('.galleryitem a', {

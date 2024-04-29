@@ -1,6 +1,5 @@
-//import VimeoPlayer from '../../node_modules/@vimeo/player/dist/player.js';
-//import * as throttle from '../../node_modules/lodash.throttle/index.js';
-//import { throttle } from "../../node_modules/lodash.throttle/index.js";
+import Player from '@vimeo/player';
+import throttle from 'lodash.throttle';
 
 // Inicjalizacja odtwarzacza Vimeo
 const player = new Player('vimeo-player');
