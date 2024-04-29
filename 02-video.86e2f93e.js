@@ -1,2 +1,0 @@
-const e=new Player("vimeo-player"),t=throttle((async()=>{try{const t=await e.getCurrentTime();localStorage.setItem("videoplayer-current-time",t.toString())}catch(e){console.error("Błąd podczas zapisywania czasu odtwarzania: ",e)}}),1e3);e.on("timeupdate",t),window.addEventListener("DOMContentLoaded",(async()=>{try{const t=localStorage.getItem("videoplayer-current-time");t&&await e.setCurrentTime(parseFloat(t))}catch(e){console.error("Błąd podczas ustawiania czasu odtwarzania: ",e)}}));
-//# sourceMappingURL=02-video.86e2f93e.js.map
