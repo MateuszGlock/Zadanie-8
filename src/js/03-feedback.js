@@ -1,7 +1,8 @@
-import throttle from 'lodash/throttle';
+// Import biblioteki lodash.throttle
+import throttle from 'lodash.throttle';
 
-//zapisywanie danych w localStorage
-function saveFormDataToLocalStorage() {
+// Funkcja do zapisywania stanu formularza w local storage
+function saveToLocalStorage() {
   const formData = {
     email: document.querySelector('input[name="email"]').value,
     message: document.querySelector('textarea[name="message"]').value,
@@ -9,22 +10,12 @@ function saveFormDataToLocalStorage() {
   localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 }
 
-// Znajdź formularz i nasłuchuj zdarzenia "input" na polach formularza
-const feedbackForm = document.querySelector('.feedback-form');
-feedbackForm.addEventListener(
-  'input',
-  throttle(saveFormDataToLocalStorage, 500)
-);
-// Funkcja, która wczytuje dane z Local Storage i wypełnia nimi pola formularza
-function loadFormDataFromLocalStorage() {
-  const savedFormData = localStorage.getItem('feedback-form-state');
-  if (savedFormData) {
-    const formData = JSON.parse(savedFormData);
-    const emailInput = document.querySelector('input[name="email"]');
-    const messageTextarea = document.querySelector('textarea[name="message"]');
-
-    emailInput.value = formData.email;
-    messageTextarea.value = formData.message;
+// Funkcja do wypełniania pól formularza danymi z local storage
+function fillFormFromLocalStorage() {
+  const formData = JSON.parse(localStorage.getItem('feedback-form-state'));
+  if (formData) {
+    document.querySelector('input[name="email"]').value = formData.email;
+    document.querySelector('textarea[name="message"]').value = formData.message;
   }
 }
 
