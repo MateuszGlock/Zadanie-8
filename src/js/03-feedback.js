@@ -1,19 +1,14 @@
-/*// Import biblioteki lodash.throttle
-import throttle from "lodash/throttle";
+import throttle from 'lodash/throttle';
 
-// Funkcja, która zapisuje dane w Local Storage
+//zapisywanie danych w localStorage
 function saveFormDataToLocalStorage() {
-  const emailInput = document.querySelector('input[name="email"]');
-  const messageTextarea = document.querySelector('textarea[name="message"]');
-
   const formData = {
-    email: emailInput.value,
-    message: messageTextarea.value,
+    email: document.querySelector('input[name="email"]').value,
+    message: document.querySelector('textarea[name="message"]').value,
   };
-
-  localStorage.setItem("feedback-form-state", JSON.stringify(formData));
+  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 }
-*/
+
 // Znajdź formularz i nasłuchuj zdarzenia "input" na polach formularza
 const feedbackForm = document.querySelector('.feedback-form');
 feedbackForm.addEventListener(
@@ -33,28 +28,34 @@ function loadFormDataFromLocalStorage() {
   }
 }
 
-// Wywołaj funkcję wczytującą dane podczas ładowania strony
-window.addEventListener('load', loadFormDataFromLocalStorage);
-// Funkcja obsługująca wysłanie formularza
-function handleSubmit(event) {
-  event.preventDefault();
-
-  // Wyczyść Local Storage
+// Funkcja do czyszczenia local storage i pól formularza po wysłaniu formularza
+function clearLocalStorageAndForm() {
   localStorage.removeItem('feedback-form-state');
-
-  // Wyczyść pola formularza
-  const emailInput = document.querySelector('input[name="email"]');
-  const messageTextarea = document.querySelector('textarea[name="message"]');
-  emailInput.value = '';
-  messageTextarea.value = '';
-
-  // Wyloguj dane do konsoli
-  const formData = {
-    email: emailInput.value,
-    message: messageTextarea.value,
-  };
-  console.log('Wysłane dane:', formData);
+  document.querySelector('input[name="email"]').value = '';
+  document.querySelector('textarea[name="message"]').value = '';
 }
 
-// Nasłuchuj zdarzenia "submit" na formularzu
-feedbackForm.addEventListener('submit', handleSubmit);
+// Funkcja do wylogowywania danych z formularza
+function logFormData() {
+  const formData = JSON.parse(localStorage.getItem('feedback-form-state'));
+  if (formData) {
+    console.log('Logged form data:', formData);
+  }
+}
+
+// Dodanie obsługi zdarzeń dla formularza
+document.addEventListener('DOMContentLoaded', function () {
+  fillFormFromLocalStorage();
+
+  document
+    .querySelector('.feedback-form')
+    .addEventListener('input', throttle(saveToLocalStorage, 500));
+
+  document
+    .querySelector('.feedback-form')
+    .addEventListener('submit', function (event) {
+      event.preventDefault();
+      clearLocalStorageAndForm();
+      logFormData();
+    });
+});

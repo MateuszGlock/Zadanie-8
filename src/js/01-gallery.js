@@ -1,4 +1,4 @@
-import { galleryItems } from './gallery-items';
+import { galleryItems } from './gallery-items.js';
 // Opisany w dokumentacji
 import SimpleLightbox from 'simplelightbox';
 // Dodatkowy import stylów
