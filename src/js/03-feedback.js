@@ -1,6 +1,7 @@
-import throttle from 'lodash.throttle';
+import throttle from 'lodash/throttle';
 
 const form = document.querySelector('form.feedback-form');
+const submitButton = form.querySelector('button[type="submit"]');
 
 const formDataStr = localStorage.getItem('feedback-form-state');
 if (formDataStr) {
@@ -17,15 +18,28 @@ const saveToLocalStorage = throttle(() => {
   localStorage.setItem('feedback-form-state', JSON.stringify(data));
 }, 500);
 
-form.addEventListener('input', saveToLocalStorage);
+form.addEventListener('input', () => {
+  saveToLocalStorage();
+
+  const emailValue = form.elements.email.value.trim();
+  const messageValue = form.elements.message.value.trim();
+
+  submitButton.disabled = !emailValue || !messageValue;
+});
 
 form.addEventListener('submit', ev => {
   ev.preventDefault();
+
+  const emailValue = form.elements.email.value.trim();
+  const messageValue = form.elements.message.value.trim();
+
   console.log({
-    email: ev.target.elements.email.value,
-    message: ev.target.elements.message.value,
+    email: emailValue,
+    message: messageValue,
   });
+
   localStorage.removeItem('feedback-form-state');
   form.elements.email.value = '';
   form.elements.message.value = '';
+  submitButton.disabled = true;
 });
