@@ -1,4 +1,4 @@
-import throttle from 'lodash/throttle';
+import throttle from 'lodash.throttle';
 
 const form = document.querySelector('form.feedback-form');
 const submitButton = form.querySelector('button[type="submit"]');
