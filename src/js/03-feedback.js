@@ -24,6 +24,8 @@ form.addEventListener('input', () => {
   const emailValue = form.elements.email.value.trim();
   const messageValue = form.elements.message.value.trim();
 
+  console.log(emailValue, messageValue);
+
   submitButton.disabled = !emailValue || !messageValue;
 });
 
