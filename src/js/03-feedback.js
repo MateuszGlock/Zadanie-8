@@ -1,52 +1,29 @@
-// Import biblioteki lodash.throttle
-import throttle from 'lodash.throttle';
+const form = document.querySelector('form.feedback-form');
 
-// Funkcja do zapisywania stanu formularza w local storage
-function saveToLocalStorage() {
-  const formData = {
-    email: document.querySelector('input[name="email"]').value,
-    message: document.querySelector('textarea[name="message"]').value,
+const formDataStr = localStorage.getItem('feedback-form-state');
+if (formDataStr) {
+  const formData = JSON.parse(formDataStr);
+  form.elements.email.value = formData.email;
+  form.elements.message.value = formData.message;
+}
+
+const saveToLocalStorage = _.throttle(() => {
+  const data = {
+    email: form.elements.email.value,
+    message: form.elements.message.value,
   };
-  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
-}
+  localStorage.setItem('feedback-form-state', JSON.stringify(data));
+}, 500);
 
-// Funkcja do wypełniania pól formularza danymi z local storage
-function fillFormFromLocalStorage() {
-  const formData = JSON.parse(localStorage.getItem('feedback-form-state'));
-  if (formData) {
-    document.querySelector('input[name="email"]').value = formData.email;
-    document.querySelector('textarea[name="message"]').value = formData.message;
-  }
-}
+form.addEventListener('input', saveToLocalStorage);
 
-// Funkcja do czyszczenia local storage i pól formularza po wysłaniu formularza
-function clearLocalStorageAndForm() {
-  localStorage.removeItem('feedback-form-state');
-  document.querySelector('input[name="email"]').value = '';
-  document.querySelector('textarea[name="message"]').value = '';
-}
-
-// Funkcja do wylogowywania danych z formularza
-function logFormData() {
-  const formData = JSON.parse(localStorage.getItem('feedback-form-state'));
-  if (formData) {
-    console.log('Logged form data:', formData);
-  }
-}
-
-// Dodanie obsługi zdarzeń dla formularza
-document.addEventListener('DOMContentLoaded', function () {
-  fillFormFromLocalStorage();
-
-  document
-    .querySelector('.feedback-form')
-    .addEventListener('input', throttle(saveToLocalStorage, 500));
-
-  document
-    .querySelector('.feedback-form')
-    .addEventListener('submit', function (event) {
-      event.preventDefault();
-      clearLocalStorageAndForm();
-      logFormData();
-    });
+form.addEventListener('submit', ev => {
+  ev.preventDefault();
+  console.log({
+    email: ev.target.elements.email.value,
+    message: ev.target.elements.message.value,
+  });
+  localStorage.clear();
+  form.elements.email.value = '';
+  form.elements.message.value = '';
 });
