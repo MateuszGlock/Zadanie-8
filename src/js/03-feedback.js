@@ -2,6 +2,9 @@ import throttle from 'lodash.throttle';
 
 const form = document.querySelector('form.feedback-form');
 const submitButton = form.querySelector('button[type="submit"]');
+if (!form.elements.email.value.trim() || !form.elements.message.value.trim()) {
+  submitButton.disabled = true;
+}
 
 const formDataStr = localStorage.getItem('feedback-form-state');
 if (formDataStr) {
@@ -23,8 +26,6 @@ form.addEventListener('input', () => {
 
   const emailValue = form.elements.email.value.trim();
   const messageValue = form.elements.message.value.trim();
-
-  console.log(emailValue, messageValue);
 
   submitButton.disabled = !emailValue || !messageValue;
 });
