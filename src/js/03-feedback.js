@@ -14,7 +14,6 @@ if (
   !form.elements.email.value.includes('@') ||
   form.elements.message.value == ''
 ) {
-  console.log('disabled');
   submitButton.disabled = true;
 }
 
@@ -32,7 +31,7 @@ form.addEventListener('input', () => {
   const emailValue = form.elements.email.value.trim();
   const messageValue = form.elements.message.value.trim();
 
-  submitButton.disabled = emailValue.includes('@') || !messageValue;
+  submitButton.disabled = !emailValue.includes('@') || !messageValue;
 });
 
 form.addEventListener('submit', ev => {
