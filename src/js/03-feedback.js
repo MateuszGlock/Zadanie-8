@@ -2,7 +2,10 @@ import throttle from 'lodash.throttle';
 
 const form = document.querySelector('form.feedback-form');
 const submitButton = form.querySelector('button[type="submit"]');
-if (!form.elements.email.value.trim() || !form.elements.message.value.trim()) {
+if (
+  !form.elements.email.value.includes('@') ||
+  form.elements.message.value === ''
+) {
   submitButton.disabled = true;
 }
 
