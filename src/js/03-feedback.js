@@ -2,18 +2,20 @@ import throttle from 'lodash.throttle';
 
 const form = document.querySelector('form.feedback-form');
 const submitButton = form.querySelector('button[type="submit"]');
-if (
-  !form.elements.email.value.includes('@') ||
-  form.elements.message.value === ''
-) {
-  submitButton.disabled = true;
-}
 
 const formDataStr = localStorage.getItem('feedback-form-state');
 if (formDataStr) {
   const formData = JSON.parse(formDataStr);
   form.elements.email.value = formData.email;
   form.elements.message.value = formData.message;
+}
+
+if (
+  !form.elements.email.value.includes('@') ||
+  form.elements.message.value == ''
+) {
+  console.log('disabled');
+  submitButton.disabled = true;
 }
 
 const saveToLocalStorage = throttle(() => {
@@ -30,7 +32,7 @@ form.addEventListener('input', () => {
   const emailValue = form.elements.email.value.trim();
   const messageValue = form.elements.message.value.trim();
 
-  submitButton.disabled = !emailValue || !messageValue;
+  submitButton.disabled = emailValue.inclused('@') || !messageValue;
 });
 
 form.addEventListener('submit', ev => {
