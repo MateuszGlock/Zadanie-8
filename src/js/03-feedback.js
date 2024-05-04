@@ -32,7 +32,7 @@ form.addEventListener('input', () => {
   const emailValue = form.elements.email.value.trim();
   const messageValue = form.elements.message.value.trim();
 
-  submitButton.disabled = emailValue.inclused('@') || !messageValue;
+  submitButton.disabled = emailValue.inclusdes('@') || !messageValue;
 });
 
 form.addEventListener('submit', ev => {
